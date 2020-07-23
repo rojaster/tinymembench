@@ -333,9 +333,21 @@ bench_info *get_asm_framebuffer_benchmarks(void)
 #elif defined(__aarch64__)
 
 #include "aarch64-asm.h"
+#include "aarch64-neon.h"
 
 static bench_info aarch64_neon[] =
 {
+    // @Cleanup(alekum): Perhaps it's better to move the C NEON intrinsics parts into c_benchmark
+    // section, put here asm?
+    { "NEON 64x2 COPY", 0, aligned_block_neon_copy_64x2_aarch64 },
+    { "NEON 64x2x4 COPY", 0, aligned_block_neon_copy_64x2x4_aarch64 },
+    { "NEON 64x1x4_x2 COPY", 0, aligned_block_neon_copy_64x1x4_x2_aarch64 },
+    { "NEON 64x2 COPY prefetch x2", 0, aligned_block_neon_copy_64x2_aarch64_pf2 },
+    { "NEON 64x2x4 COPY prefetch x1", 0, aligned_block_neon_copy_64x2x4_aarch64_pf1 },
+    { "NEON 64x2 COPY prefetch x1", 0, aligned_block_neon_copy_64x2_aarch64_pf1 },
+    { "NEON 64x2x4 COPY prefetch x1", 0, aligned_block_neon_copy_64x2x4_aarch64_pf1},
+
+    //  ASM only
     { "NEON LDP/STP copy", 0, aligned_block_copy_ldpstp_q_aarch64 },
     { "NEON LDP/STP copy pldl2strm (32 bytes step)", 0, aligned_block_copy_ldpstp_q_pf32_l2strm_aarch64 },
     { "NEON LDP/STP copy pldl2strm (64 bytes step)", 0, aligned_block_copy_ldpstp_q_pf64_l2strm_aarch64 },
