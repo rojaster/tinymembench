@@ -30,7 +30,9 @@
 
 .macro asm_function_helper function_name
     .global \function_name
-.func \function_name
+#if !defined(__APPLE__)
+    .func \function_name
+#endif
 \function_name:
 #ifdef __amd64__
   #ifdef _WIN64
@@ -50,7 +52,11 @@
     .set SRC,  ecx
     .set SIZE, edx
 #endif
+#if defined(__APPLE__)
+.endmacro
+#else
 .endm
+#endif
 
 .macro asm_function function_name
 #if defined(_WIN32) && !defined(_WIN64)
@@ -58,19 +64,31 @@
 #else
     asm_function_helper \function_name
 #endif
+#if defined(__APPLE__)
+.endmacro
+#else
 .endm
+#endif
 
 .macro push3 a, b, c
     push \a
     push \b
     push \c
+#if defined(__APPLE__)
+.endmacro
+#else
 .endm
+#endif
 
 .macro pop3 a, b, c
     pop \c
     pop \b
     pop \a
+#if defined(__APPLE__)
+.endmacro
+#else
 .endm
+#endif
 
 /*****************************************************************************/
 
@@ -90,7 +108,9 @@ asm_function aligned_block_copy_movsb
     pop3        edi esi ecx
 #endif
     ret
+#if !defined(__APPLE__)
 .endfunc
+#endif
 
 asm_function aligned_block_copy_movsd
 0:
@@ -110,7 +130,9 @@ asm_function aligned_block_copy_movsd
     pop3        edi esi ecx
 #endif
     ret
+#if !defined(__APPLE__)
 .endfunc
+#endif
 
 asm_function aligned_block_copy_sse2
 0:
@@ -127,7 +149,9 @@ asm_function aligned_block_copy_sse2
     sub         SIZE, 64
     jg          0b
     ret
+#if !defined(__APPLE__)
 .endfunc
+#endif
 
 asm_function aligned_block_copy_nt_sse2
 0:
@@ -144,7 +168,9 @@ asm_function aligned_block_copy_nt_sse2
     sub         SIZE, 64
     jg          0b
     ret
+#if !defined(__APPLE__)
 .endfunc
+#endif
 
 asm_function aligned_block_copy_pf32_sse2
 0:
@@ -163,7 +189,9 @@ asm_function aligned_block_copy_pf32_sse2
     sub         SIZE,       64
     jg          0b
     ret
+#if !defined(__APPLE__)
 .endfunc
+#endif
 
 asm_function aligned_block_copy_nt_pf32_sse2
 0:
@@ -182,7 +210,9 @@ asm_function aligned_block_copy_nt_pf32_sse2
     sub         SIZE,       64
     jg          0b
     ret
+#if !defined(__APPLE__)
 .endfunc
+#endif
 
 asm_function aligned_block_copy_pf64_sse2
 0:
@@ -200,7 +230,9 @@ asm_function aligned_block_copy_pf64_sse2
     sub         SIZE,       64
     jg          0b
     ret
+#if !defined(__APPLE__)
 .endfunc
+#endif
 
 asm_function aligned_block_copy_nt_pf64_sse2
 0:
@@ -218,7 +250,9 @@ asm_function aligned_block_copy_nt_pf64_sse2
     sub         SIZE,       64
     jg          0b
     ret
+#if !defined(__APPLE__)
 .endfunc
+#endif
 
 asm_function aligned_block_fill_sse2
     movdqa      xmm0,       [SRC + 0]
@@ -231,7 +265,9 @@ asm_function aligned_block_fill_sse2
     sub         SIZE,       64
     jg          0b
     ret
+#if !defined(__APPLE__)
 .endfunc
+#endif
 
 asm_function aligned_block_fill_nt_sse2
     movdqa      xmm0,       [SRC + 0]
@@ -244,8 +280,9 @@ asm_function aligned_block_fill_nt_sse2
     sub         SIZE,       64
     jg          0b
     ret
+#if !defined(__APPLE__)
 .endfunc
-
+#endif
 /*****************************************************************************/
 
 #endif
