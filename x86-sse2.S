@@ -28,12 +28,16 @@
 
 #define PREFETCH_DISTANCE 256
 
+#if defined(__APPLE__)
+.macro asm_function_helper
+    .globl _$0
+_$0:
+#else
 .macro asm_function_helper function_name
     .global \function_name
-#if !defined(__APPLE__)
     .func \function_name
-#endif
 \function_name:
+#endif
 #ifdef __amd64__
   #ifdef _WIN64
     .set DST,  rcx
@@ -58,54 +62,80 @@
 .endm
 #endif
 
+
+#if defined(__APPLE__)
+.macro asm_function
+    asm_function_helper $0
+.endmacro
+#else
 .macro asm_function function_name
 #if defined(_WIN32) && !defined(_WIN64)
     asm_function_helper _\function_name
 #else
     asm_function_helper \function_name
 #endif
-#if defined(__APPLE__)
-.endmacro
-#else
 .endm
 #endif
 
+#if !defined(__APPLE__)
 .macro push3 a, b, c
     push \a
     push \b
     push \c
-#if defined(__APPLE__)
-.endmacro
-#else
 .endm
-#endif
 
 .macro pop3 a, b, c
     pop \c
     pop \b
     pop \a
-#if defined(__APPLE__)
-.endmacro
-#else
 .endm
+#else
+.macro push3
+    push $0
+    push $1
+    push $2
+.endmacro
+
+.macro pop3
+    pop $2
+    pop $1
+    pop $0
+.endmacro
 #endif
+
 
 /*****************************************************************************/
 
 asm_function aligned_block_copy_movsb
 0:
 #ifdef __amd64__
+#if defined(__APPLE__)
+    push3       rdi,rsi,rcx
+    push3       DST,SRC,SIZE
+    pop3        rdi,rsi,rcx
+    rep movsb
+    pop3        rdi,rsi,rcx
+#else
     push3       rdi rsi rcx
     push3       DST SRC SIZE
     pop3        rdi rsi rcx
     rep movsb
     pop3        rdi rsi rcx
+#endif
+#else
+#if defined(__APPLE__)
+    push3       edi,esi,ecx
+    push3       DST,SRC,SIZE
+    pop3        edi,esi,ecx
+    rep movsb
+    pop3        edi,esi,ecx
 #else
     push3       edi esi ecx
     push3       DST SRC SIZE
     pop3        edi esi ecx
     rep movsb
     pop3        edi esi ecx
+#endif
 #endif
     ret
 #if !defined(__APPLE__)
@@ -115,12 +145,29 @@ asm_function aligned_block_copy_movsb
 asm_function aligned_block_copy_movsd
 0:
 #ifdef __amd64__
+#if defined(__APPLE__)
+    push3       rdi,rsi,rcx
+    push3       DST,SRC,SIZE
+    pop3        rdi,rsi,rcx
+    sar         rcx, 2
+    rep movsd
+    pop3        rdi,rsi,rcx
+#else
     push3       rdi rsi rcx
     push3       DST SRC SIZE
     pop3        rdi rsi rcx
     sar         rcx, 2
     rep movsd
     pop3        rdi rsi rcx
+#endif
+#else
+#if defined(__APPLE__)
+    push3       edi,esi,ecx
+    push3       DST,SRC,SIZE
+    pop3        edi,esi,ecx
+    sar         ecx, 2
+    rep movsd
+    pop3        edi,esi,ecx
 #else
     push3       edi esi ecx
     push3       DST SRC SIZE
@@ -128,6 +175,7 @@ asm_function aligned_block_copy_movsd
     sar         ecx, 2
     rep movsd
     pop3        edi esi ecx
+#endif
 #endif
     ret
 #if !defined(__APPLE__)
