@@ -1,3 +1,5 @@
+#ifdef defined(__arm__) // @TODO(alekum): refactor Makefile
+
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -140,3 +142,4 @@ void aligned_block_neon_copy_64x1x4_x2_aarch64_pf1(int64_t *__restrict dst_,
     }
 }
 
+#endif
