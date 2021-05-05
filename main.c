@@ -161,7 +161,7 @@ void memset_wrapper(int64_t *dst, int64_t *src, int size)
     memset(dst, src[0], size);
 }
 
-static bench_info c_benchmarks[] =
+static bench_info c_hrbenchmarks[] =
 {
     { "C copy backwards", 0, aligned_block_copy_backwards },
     { "C copy backwards (32 byte blocks)", 0, aligned_block_copy_backwards_bs32 },
@@ -176,6 +176,19 @@ static bench_info c_benchmarks[] =
     { "C fill (shuffle within 16 byte blocks)", 0, aligned_block_fill_shuffle16 },
     { "C fill (shuffle within 32 byte blocks)", 0, aligned_block_fill_shuffle32 },
     { "C fill (shuffle within 64 byte blocks)", 0, aligned_block_fill_shuffle64 },
+
+#if defiend(__aarch64__)
+    // @Information(alekum): Put it here from asm-opt.c to keep clarity
+    // it doesn't make sense to keep C benches there even though it relates to aarch64
+    #include "aarch64-neon.h"
+    { "NEON 64x2 COPY", 0, aligned_block_neon_copy_64x2_aarch64 },
+    { "NEON 64x2x4 COPY", 0, aligned_block_neon_copy_64x2x4_aarch64 },
+    { "NEON 64x1x4_x2 COPY", 0, aligned_block_neon_copy_64x1x4_x2_aarch64 },
+    { "NEON 64x2 COPY prefetch x2", 0, aligned_block_neon_copy_64x2_aarch64_pf2 },
+    { "NEON 64x2x4 COPY prefetch x1", 0, aligned_block_neon_copy_64x2x4_aarch64_pf1 },
+    { "NEON 64x2 COPY prefetch x1", 0, aligned_block_neon_copy_64x2_aarch64_pf1 },
+    { "NEON 64x2x4 COPY prefetch x1", 0, aligned_block_neon_copy_64x2x4_aarch64_pf1},
+#endif
     { NULL, 0, NULL }
 };
 

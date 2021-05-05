@@ -1,12 +1,10 @@
-#ifdef defined(__arm__) // @TODO(alekum): refactor Makefile
-
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#include <arm_neon.h>
-#include "constants.h"
 #include "aarch64-neon.h"
+
+#define PREFETCH_DISTANCE 320
 
 void aligned_block_neon_copy_64x2_aarch64(int64_t *__restrict dst_,
                                           int64_t *__restrict src,
@@ -142,4 +140,3 @@ void aligned_block_neon_copy_64x1x4_x2_aarch64_pf1(int64_t *__restrict dst_,
     }
 }
 
-#endif
