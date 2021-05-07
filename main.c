@@ -161,7 +161,7 @@ void memset_wrapper(int64_t *dst, int64_t *src, int size)
     memset(dst, src[0], size);
 }
 
-static bench_info c_hrbenchmarks[] =
+static bench_info c_benchmarks[] =
 {
     { "C copy backwards", 0, aligned_block_copy_backwards },
     { "C copy backwards (32 byte blocks)", 0, aligned_block_copy_backwards_bs32 },
@@ -177,7 +177,7 @@ static bench_info c_hrbenchmarks[] =
     { "C fill (shuffle within 32 byte blocks)", 0, aligned_block_fill_shuffle32 },
     { "C fill (shuffle within 64 byte blocks)", 0, aligned_block_fill_shuffle64 },
 
-#if defiend(__aarch64__)
+#if defined(__aarch64__)
     // @Information(alekum): Put it here from asm-opt.c to keep clarity
     // it doesn't make sense to keep C benches there even though it relates to aarch64
     #include "aarch64-neon.h"

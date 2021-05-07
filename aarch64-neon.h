@@ -1,3 +1,4 @@
+#if defined (__aarch64__)
 #ifndef __AARCH64_NEON_H__
 #define __AARCH64_NEON_H__
 #include <stdint.h>
@@ -39,3 +40,4 @@ void aligned_block_neon_copy_64x1x4_x2_aarch64_pf1(int64_t *__restrict dst_,
 
 #endif // __AARCH64_NEON_H__
 
+#endif // __aarch64__

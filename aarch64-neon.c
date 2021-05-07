@@ -1,3 +1,4 @@
+#if defined(__aarch64__)
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -88,8 +89,8 @@ void aligned_block_neon_copy_64x2x4_aarch64(int64_t *__restrict dst_,
         src+=8;
     }
 }
-
 void aligned_block_neon_copy_64x2x4_aarch64_pf1(int64_t *__restrict dst_,
+
                                                  int64_t *__restrict src,
                                                  int                 size)
 {
@@ -140,3 +141,4 @@ void aligned_block_neon_copy_64x1x4_x2_aarch64_pf1(int64_t *__restrict dst_,
     }
 }
 
+#endif // __aarch64__

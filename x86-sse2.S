@@ -29,6 +29,9 @@
 #define PREFETCH_DISTANCE 256
 
 #if defined(__APPLE__)
+#define DST rdi
+#define SRC rsi
+#define SIZE rdx
 .macro asm_function_helper
     .globl _$0
 _$0:
@@ -37,16 +40,15 @@ _$0:
     .global \function_name
     .func \function_name
 \function_name:
-#endif
 #ifdef __amd64__
   #ifdef _WIN64
     .set DST,  rcx
     .set SRC,  rdx
     .set SIZE, r8
   #else
-    .set DST,  rdi
-    .set SRC,  rsi
-    .set SIZE, rdx
+    .set DST,rdi
+    .set SRC,rsi
+    .set SIZE,rdx
   #endif
 #else
     mov  eax,  [esp + 4]
@@ -55,6 +57,7 @@ _$0:
     .set DST,  eax
     .set SRC,  ecx
     .set SIZE, edx
+#endif
 #endif
 #if defined(__APPLE__)
 .endmacro
@@ -194,7 +197,7 @@ asm_function aligned_block_copy_sse2
     movdqa      [DST + 48], xmm3
     add         SRC,        64
     add         DST,        64
-    sub         SIZE, 64
+    sub         SIZE,       64
     jg          0b
     ret
 #if !defined(__APPLE__)
