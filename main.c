@@ -40,6 +40,8 @@
 #include "asm-opt.h"
 #include "version.h"
 
+#define VERSION "0.4.10"
+
 #define SIZE             (32 * 1024 * 1024)
 #define BLOCKSIZE        2048
 #ifndef MAXREPEATS

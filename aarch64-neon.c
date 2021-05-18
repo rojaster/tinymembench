@@ -1,4 +1,4 @@
-#if defined(__aarch64__)
+#ifdef __aarch64__
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>

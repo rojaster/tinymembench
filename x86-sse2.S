@@ -28,7 +28,10 @@
 
 #define PREFETCH_DISTANCE 256
 
-#if defined(__APPLE__)
+// @Cleanup(alekum) Find a better way to set aliases
+#ifdef __clang__
+#define ENDFUNC
+#define ENDMACRO .endmacro
 #define DST rdi
 #define SRC rsi
 #define SIZE rdx
@@ -36,6 +39,8 @@
     .globl _$0
 _$0:
 #else
+#define ENDFUCN .endfunc
+#define ENDMACRO .endm
 .macro asm_function_helper function_name
     .global \function_name
     .func \function_name
@@ -59,17 +64,11 @@ _$0:
     .set SIZE, edx
 #endif
 #endif
-#if defined(__APPLE__)
-.endmacro
-#else
-.endm
-#endif
+ENDMACRO
 
-
-#if defined(__APPLE__)
+#ifdef __clang__
 .macro asm_function
     asm_function_helper $0
-.endmacro
 #else
 .macro asm_function function_name
 #if defined(_WIN32) && !defined(_WIN64)
@@ -77,10 +76,10 @@ _$0:
 #else
     asm_function_helper \function_name
 #endif
-.endm
 #endif
+ENDMACRO 
 
-#if !defined(__APPLE__)
+#ifndef __clang__
 .macro push3 a, b, c
     push \a
     push \b
@@ -112,7 +111,7 @@ _$0:
 asm_function aligned_block_copy_movsb
 0:
 #ifdef __amd64__
-#if defined(__APPLE__)
+#ifdef __clang__
     push3       rdi,rsi,rcx
     push3       DST,SRC,SIZE
     pop3        rdi,rsi,rcx
@@ -126,7 +125,7 @@ asm_function aligned_block_copy_movsb
     pop3        rdi rsi rcx
 #endif
 #else
-#if defined(__APPLE__)
+#ifdef __clang__
     push3       edi,esi,ecx
     push3       DST,SRC,SIZE
     pop3        edi,esi,ecx
@@ -141,14 +140,12 @@ asm_function aligned_block_copy_movsb
 #endif
 #endif
     ret
-#if !defined(__APPLE__)
-.endfunc
-#endif
+ENDFUNC
 
 asm_function aligned_block_copy_movsd
 0:
 #ifdef __amd64__
-#if defined(__APPLE__)
+#ifdef __clang__
     push3       rdi,rsi,rcx
     push3       DST,SRC,SIZE
     pop3        rdi,rsi,rcx
@@ -164,7 +161,7 @@ asm_function aligned_block_copy_movsd
     pop3        rdi rsi rcx
 #endif
 #else
-#if defined(__APPLE__)
+#ifdef __clang__
     push3       edi,esi,ecx
     push3       DST,SRC,SIZE
     pop3        edi,esi,ecx
@@ -181,9 +178,7 @@ asm_function aligned_block_copy_movsd
 #endif
 #endif
     ret
-#if !defined(__APPLE__)
-.endfunc
-#endif
+ENDFUNC
 
 asm_function aligned_block_copy_sse2
 0:
@@ -200,9 +195,7 @@ asm_function aligned_block_copy_sse2
     sub         SIZE,       64
     jg          0b
     ret
-#if !defined(__APPLE__)
-.endfunc
-#endif
+ENDFUNC
 
 asm_function aligned_block_copy_nt_sse2
 0:
@@ -219,9 +212,7 @@ asm_function aligned_block_copy_nt_sse2
     sub         SIZE, 64
     jg          0b
     ret
-#if !defined(__APPLE__)
-.endfunc
-#endif
+ENDFUNC
 
 asm_function aligned_block_copy_pf32_sse2
 0:
@@ -240,9 +231,7 @@ asm_function aligned_block_copy_pf32_sse2
     sub         SIZE,       64
     jg          0b
     ret
-#if !defined(__APPLE__)
-.endfunc
-#endif
+ENDFUNC
 
 asm_function aligned_block_copy_nt_pf32_sse2
 0:
@@ -261,9 +250,7 @@ asm_function aligned_block_copy_nt_pf32_sse2
     sub         SIZE,       64
     jg          0b
     ret
-#if !defined(__APPLE__)
-.endfunc
-#endif
+ENDFUNC
 
 asm_function aligned_block_copy_pf64_sse2
 0:
@@ -281,9 +268,7 @@ asm_function aligned_block_copy_pf64_sse2
     sub         SIZE,       64
     jg          0b
     ret
-#if !defined(__APPLE__)
-.endfunc
-#endif
+ENDFUNC
 
 asm_function aligned_block_copy_nt_pf64_sse2
 0:
@@ -301,9 +286,7 @@ asm_function aligned_block_copy_nt_pf64_sse2
     sub         SIZE,       64
     jg          0b
     ret
-#if !defined(__APPLE__)
-.endfunc
-#endif
+ENDFUNC
 
 asm_function aligned_block_fill_sse2
     movdqa      xmm0,       [SRC + 0]
@@ -316,9 +299,7 @@ asm_function aligned_block_fill_sse2
     sub         SIZE,       64
     jg          0b
     ret
-#if !defined(__APPLE__)
-.endfunc
-#endif
+ENDFUNC
 
 asm_function aligned_block_fill_nt_sse2
     movdqa      xmm0,       [SRC + 0]
@@ -331,9 +312,7 @@ asm_function aligned_block_fill_nt_sse2
     sub         SIZE,       64
     jg          0b
     ret
-#if !defined(__APPLE__)
-.endfunc
-#endif
+ENDFUNC
 /*****************************************************************************/
 
-#endif
+#endif //  defined(__i386__) || defined(__amd64__)
