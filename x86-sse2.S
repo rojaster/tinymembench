@@ -29,18 +29,17 @@
 #define PREFETCH_DISTANCE 256
 
 #define MACRO(MACRO_NAME, PARAMETERS...) .macro MACRO_NAME PARAMETERS
+#define ENDMACRO .endm
 
 #ifdef __clang__
 #define FUNC
 #define ENDFUNC
-#define ENDMACRO .endm
 #define DST rdi
 #define SRC rsi
 #define SIZE rdx
 #else
 #define FUNC .func \function_name
 #define ENDFUNC .endfunc
-#define ENDMACRO .endm
 #endif // __clang__
 
 #if __APPLE__ && __clang__
