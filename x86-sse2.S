@@ -33,7 +33,7 @@
 #ifdef __clang__
 #define FUNC
 #define ENDFUNC
-#define ENDMACRO .endmacro
+#define ENDMACRO .endm
 #define DST rdi
 #define SRC rsi
 #define SIZE rdx
@@ -63,7 +63,7 @@ _$0:
 
 #else
 
-MACRO(push3,a,b,c)
+MACRO(push3, a,b,c)
     push \a
     push \b
     push \c
