@@ -28,23 +28,60 @@
 
 #define PREFETCH_DISTANCE 256
 
-// @Cleanup(alekum) Find a better way to set aliases
+#define MACRO(MACRO_NAME, PARAMETERS...) .macro MACRO_NAME PARAMETERS
+
 #ifdef __clang__
+#define FUNC
 #define ENDFUNC
 #define ENDMACRO .endmacro
 #define DST rdi
 #define SRC rsi
 #define SIZE rdx
-.macro asm_function_helper
-    .globl _$0
-_$0:
 #else
-#define ENDFUCN .endfunc
+#define FUNC .func \function_name
+#define ENDFUNC .endfunc
 #define ENDMACRO .endm
-.macro asm_function_helper function_name
-    .global \function_name
-    .func \function_name
+#endif // __clang__
+
+#if __APPLE__ && __clang__
+
+MACRO(push3)
+    push $0
+    push $1
+    push $2
+ENDMACRO
+
+MACRO(pop3)
+    pop $2
+    pop $1
+    pop $0
+ENDMACRO
+
+MACRO(asm_function_helper)
+.globl _$0
+_$0:
+
+#else
+
+MACRO(push3,a,b,c)
+    push \a
+    push \b
+    push \c
+ENDMACRO
+
+
+MACRO(pop3, a,b,c)
+    pop \c
+    pop \b
+    pop \a
+ENDMACRO
+
+
+MACRO(asm_function_helper,function_name)
+.global \function_name
+FUNC
 \function_name:
+
 #ifdef __amd64__
   #ifdef _WIN64
     .set DST,  rcx
@@ -62,52 +99,27 @@ _$0:
     .set DST,  eax
     .set SRC,  ecx
     .set SIZE, edx
-#endif
-#endif
+#endif // __amd64__
+
+#endif // __APPLE__
 ENDMACRO
 
-#ifdef __clang__
-.macro asm_function
+
+#if defined(__APPLE__)
+MACRO(asm_function)
     asm_function_helper $0
 #else
-.macro asm_function function_name
+MACRO(asm_function,function_name)
 #if defined(_WIN32) && !defined(_WIN64)
     asm_function_helper _\function_name
 #else
     asm_function_helper \function_name
-#endif
-#endif
-ENDMACRO 
-
-#ifndef __clang__
-.macro push3 a, b, c
-    push \a
-    push \b
-    push \c
-.endm
-
-.macro pop3 a, b, c
-    pop \c
-    pop \b
-    pop \a
-.endm
-#else
-.macro push3
-    push $0
-    push $1
-    push $2
-.endmacro
-
-.macro pop3
-    pop $2
-    pop $1
-    pop $0
-.endmacro
-#endif
+#endif // _WIN*
+#endif // __APPLE__
+ENDMACRO
 
 
 /*****************************************************************************/
-
 asm_function aligned_block_copy_movsb
 0:
 #ifdef __amd64__
