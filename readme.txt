@@ -20,3 +20,10 @@ Example of crosscompiling and running the benchmark on android device:
     $ CC=arm-linux-gnueabihf-gcc CFLAGS="-O2 -mcpu=cortex-a8 -static" make
     $ adb push tinymembench /data/local/tmp/tinymembench
     $ adb shell /data/local/tmp/tinymembench
+
+Remarks:
+- [X] it works perfectly well with Clang's integrated assembler
+- [X] compiled on Apple, Linux x86 and tested with/without -fno-integrated-as flag
+  - [X] no issues on Linux
+  - [X] Apple deprecated non-integrated as in favor of integrated one as part of their 
+- [ ] compiled on Apple M1
