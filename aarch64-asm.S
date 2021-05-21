@@ -29,11 +29,19 @@
 
 #define PREFETCH_DISTANCE 320
 
+#ifdef __APPLE__
+#define ENDFUNC
+.macro asm_function
+.globl $0
+$0:
+#else
+#define ENDFUNC .endfunc
 .macro asm_function function_name
     .global \function_name
     .type \function_name,%function 
 .func \function_name
 \function_name:
+#endif
     DST         .req x0
     SRC         .req x1
     SIZE        .req x2
@@ -54,7 +62,7 @@ asm_function aligned_block_copy_ldpstp_x_aarch64
     subs        SIZE, SIZE, #64
     bgt         0b
     ret
-.endfunc
+ENDFUNC
 
 asm_function aligned_block_copy_ldpstp_q_aarch64
 0:
@@ -67,7 +75,7 @@ asm_function aligned_block_copy_ldpstp_q_aarch64
     subs        SIZE, SIZE, #64
     bgt         0b
     ret
-.endfunc
+ENDFUNC
 
 asm_function aligned_block_copy_ldpstp_q_pf32_l2strm_aarch64
 0:
@@ -82,7 +90,7 @@ asm_function aligned_block_copy_ldpstp_q_pf32_l2strm_aarch64
     subs        SIZE, SIZE, #64
     bgt         0b
     ret
-.endfunc
+ENDFUNC
 
 asm_function aligned_block_copy_ldpstp_q_pf64_l2strm_aarch64
 0:
@@ -96,7 +104,7 @@ asm_function aligned_block_copy_ldpstp_q_pf64_l2strm_aarch64
     subs        SIZE, SIZE, #64
     bgt         0b
     ret
-.endfunc
+ENDFUNC
 
 asm_function aligned_block_copy_ldpstp_q_pf32_l1keep_aarch64
 0:
@@ -111,7 +119,7 @@ asm_function aligned_block_copy_ldpstp_q_pf32_l1keep_aarch64
     subs        SIZE, SIZE, #64
     bgt         0b
     ret
-.endfunc
+ENDFUNC
 
 asm_function aligned_block_copy_ldpstp_q_pf64_l1keep_aarch64
 0:
@@ -125,7 +133,7 @@ asm_function aligned_block_copy_ldpstp_q_pf64_l1keep_aarch64
     subs        SIZE, SIZE, #64
     bgt         0b
     ret
-.endfunc
+ENDFUNC
 
 asm_function aligned_block_fill_stp_x_aarch64
 0:
@@ -137,7 +145,7 @@ asm_function aligned_block_fill_stp_x_aarch64
     subs        SIZE, SIZE, #64
     bgt         0b
     ret
-.endfunc
+ENDFUNC
 
 asm_function aligned_block_fill_stp_q_aarch64
 0:
@@ -147,7 +155,7 @@ asm_function aligned_block_fill_stp_q_aarch64
     subs        SIZE, SIZE, #64
     bgt         0b
     ret
-.endfunc
+ENDFUNC
 
 asm_function aligned_block_fill_stnp_x_aarch64
 0:
@@ -159,7 +167,7 @@ asm_function aligned_block_fill_stnp_x_aarch64
     subs        SIZE, SIZE, #64
     bgt         0b
     ret
-.endfunc
+ENDFUNC
 
 asm_function aligned_block_fill_stnp_q_aarch64
 0:
@@ -169,7 +177,7 @@ asm_function aligned_block_fill_stnp_q_aarch64
     subs        SIZE, SIZE, #64
     bgt         0b
     ret
-.endfunc
+ENDFUNC
 
 asm_function aligned_block_copy_ld1st1_aarch64
 0:
@@ -180,6 +188,6 @@ asm_function aligned_block_copy_ld1st1_aarch64
     subs        SIZE, SIZE, #64
     bgt         0b
     ret
-.endfunc
+ENDFUNC
 
 #endif
