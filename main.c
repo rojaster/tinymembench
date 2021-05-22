@@ -180,9 +180,6 @@ static bench_info c_benchmarks[] =
     { "C fill (shuffle within 64 byte blocks)", 0, aligned_block_fill_shuffle64 },
 
 #if defined(__aarch64__)
-    // @Information(alekum): Put it here from asm-opt.c to keep clarity
-    // it doesn't make sense to keep C benches there even though it relates to aarch64
-    #include "aarch64-neon.h"
     { "NEON 64x2 COPY", 0, aligned_block_neon_copy_64x2_aarch64 },
     { "NEON 64x2x4 COPY", 0, aligned_block_neon_copy_64x2x4_aarch64 },
     { "NEON 64x1x4_x2 COPY", 0, aligned_block_neon_copy_64x1x4_x2_aarch64 },

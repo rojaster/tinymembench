@@ -68,4 +68,11 @@ void *alloc_four_nonaliased_buffers(void **buf1, int size1,
                                     void **buf3, int size3,
                                     void **buf4, int size4);
 
+// @Information(alekum): Put with other C functions
+// even thouh it is specifically relates to aarch64
+// but less has in common with asm benches
+#if defined(__aarch64__)
+#include "aarch64-neon.h"
+#endif
+
 #endif
