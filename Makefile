@@ -4,37 +4,29 @@ ifdef WINDIR
 	CC = gcc
 endif
 
-objects = util.o
-util.o: util.c util.h
+tinymembench: main.c util.o util.h asm-opt.h version.h asm-opt.o x86-sse2.o arm-neon.o mips-32.o aarch64-asm.o
+	${CC} -O2 ${CFLAGS} -o tinymembench main.c util.o asm-opt.o x86-sse2.o arm-neon.o mips-32.o aarch64-asm.o -lm
+
+util.o: util.c util.h aarch64-neon.h
 	${CC} -O2 ${CFLAGS} -c util.c
 
-objects += asm-opt.o
-asm-opt.o: asm-opt.c asm-opt.h
+asm-opt.o: asm-opt.c asm-opt.h x86-sse2.h arm-neon.h mips-32.h
 	${CC} -O2 ${CFLAGS} -c asm-opt.c
 
-objects += x86-sse2.o
-x86-sse2.o: x86-sse2.S x86-sse2.h
+x86-sse2.o: x86-sse2.S
 	${CC} -O2 ${CFLAGS} -c x86-sse2.S
 
-objects += arm-neon.o
-arm-neon.o: arm-neon.S arm-neon.h
+arm-neon.o: arm-neon.S
 	${CC} -O2 ${CFLAGS} -c arm-neon.S
 
-objects += mips-32.o
-mips-32.o: mips-32.S mips-32.h
-	${CC} -O2 ${CFLAGS} -c mips-32.S
-
-
-objects += aarch64-asm.o
-aarch64-asm.o: aarch64-asm.S aarch64-asm.h
+aarch64-asm.o: aarch64-asm.S
 	${CC} -O2 ${CFLAGS} -c aarch64-asm.S
 
-objects += aarch64-neon.o
 aarch64-neon.o: aarch64-neon.c aarch64-neon.h
-	$(CC) -O2 ${CFLAGS} -c aarch64-neon.c
+	${CC} -O2 ${CFLAGS} -c aarch64-neon.c
 
-tinymembench: $(objects)
-	$(CC) -O2 ${CFLAGS} main.c $(objects) -lm -o tinymembench
+mips-32.o: mips-32.S
+	${CC} -O2 ${CFLAGS} -c mips-32.S
 
 clean:
 	-rm -f tinymembench
