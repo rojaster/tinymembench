@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <sys/time.h>
+#include <arm_neon.h>
 #include "aarch64-neon.h"
 
 #define PREFETCH_DISTANCE 320

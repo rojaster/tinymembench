@@ -23,9 +23,9 @@
 
 #ifdef __aarch64__
 
-    .cpu cortex-a53+fp+simd
-    .text
-    .align 2
+.cpu cortex-a53+fp+simd
+.text
+.align 2
 
 #define PREFETCH_DISTANCE 320
 

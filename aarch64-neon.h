@@ -1,7 +1,8 @@
 #ifndef __AARCH64_NEON_H__
 #define __AARCH64_NEON_H__
+
 #include <stdint.h>
-#include <arm_neon.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
