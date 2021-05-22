@@ -26,4 +26,5 @@ Remarks:
 - [X] compiled on Apple, Linux x86 and tested with/without -fno-integrated-as flag
   - [X] no issues on Linux
   - [X] Apple deprecated non-integrated as in favor of integrated one as part of their 
-- [ ] compiled on Apple M1
+- [X] compiled on Apple M1
+  - [X] compiled with integrated as of clang
