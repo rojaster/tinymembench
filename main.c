@@ -36,6 +36,9 @@
 #include <sys/ioctl.h>
 #endif
 
+#ifdef __aarch64__
+#include "aarch64-neon.h"
+#endif
 #include "util.h"
 #include "asm-opt.h"
 #include "version.h"
@@ -179,7 +182,7 @@ static bench_info c_benchmarks[] =
     { "C fill (shuffle within 32 byte blocks)", 0, aligned_block_fill_shuffle32 },
     { "C fill (shuffle within 64 byte blocks)", 0, aligned_block_fill_shuffle64 },
 
-#if defined(__aarch64__)
+#ifdef __aarch64__
     { "NEON 64x2 COPY", 0, aligned_block_neon_copy_64x2_aarch64 },
     { "NEON 64x2x4 COPY", 0, aligned_block_neon_copy_64x2x4_aarch64 },
     { "NEON 64x1x4_x2 COPY", 0, aligned_block_neon_copy_64x1x4_x2_aarch64 },

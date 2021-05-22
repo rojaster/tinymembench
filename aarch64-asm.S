@@ -32,8 +32,8 @@
 #ifdef __APPLE__
 #define ENDFUNC
 .macro asm_function
-.globl $0
-$0:
+.globl _$0
+_$0:
 #else
 #define ENDFUNC .endfunc
 .macro asm_function function_name
