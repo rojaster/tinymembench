@@ -10,6 +10,7 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
 >> Find even more data in the [wiki](https://github.com/ssvb/tinymembench/wiki).
 
 * [Apple M1](m1.log)
+
 ```bash
 ....
  ---
