@@ -2,43 +2,60 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
 
 ## Personal contribution
 - [X] aarch64 NEON support
-- [X] clang's integrated assembler fixes for aarch64, arm, x86
+- [X] clang's integrated assembler fixes for aarch64, arm, x86 on linux and mac
 
 ### Test results comparison
-* Apple M1
+
+> Check log files to get whole output.
+>> Find even more data in the [wiki](https://github.com/ssvb/tinymembench/wiki).
+
+* [Apple M1](m1.log)
+```bash
+....
+ ---
+ standard memcpy                                      :  30251.8 MB/s (22.9%)
+ standard memset                                      :  42933.1 MB/s (8.2%)
+ ---
+ ....
+```
+
+* [Apple i7]()
 
 ```bash
 
 ```
 
-* Apple i7 <full_spec>
+* [Apple i9](i9.log)
+
+```bash
+....
+ ---
+ standard memcpy                                      :   8036.5 MB/s (1.0%)
+ standard memset                                      :  33126.4 MB/s (7.6%)
+ ---
+ ....
+```
+
+* [Linux i7]()
 
 ```bash
 
 ```
-
-* Apple Intel(R) Core(TM) i9-9980HK CPU @ 2.40GHz
-
-```bash
-
-```
-
-* Linux i7
-
-```bash
-
-```
-
-
 
 ## Supported Archs
 - [X] macOS: x86, M1
-- [X] Linux
-- [X] Android
-- [X] Windows
+- [X] Linux x86
+- [X] Android AArch64
+- [X] Windows x86
 
-> Personally tested on Apple's M1 air , i9 pro macbooks; Android ARM64 mobile phone and tablet with cortex-a76, cortex-a55 cores,
+> Personally tested on Apple's M1 air , i9 pro macbooks; Android Aarch64 mobile phone and tablet with cortex-a76, cortex-a55 cores,
 > and Linux x86 i7 desktop machine. 
-### Support or Contact
 
-Alekum <=> Rojaster
+## Ongoing plans
+- [ ] x86 SSE4
+- [ ] x86 AVX
+- [ ] AArch64 SVE
+
+
+### Support or Contact
+Alekum(Rojaster)
