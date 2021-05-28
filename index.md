@@ -1,9 +1,5 @@
 This is a simple memory benchmark program, which tries to measure the peak bandwidth of sequential memory accesses and the latency of random memory accesses. Bandwidth is measured by running different assembly code for the aligned memory blocks and attempting different prefetch strategies.
 
-## Personal contribution
-- [X] aarch64 NEON support
-- [X] clang's integrated assembler fixes for aarch64, arm, x86 on linux and mac
-
 ### Test results comparison
 
 > Check log files to get whole output.
@@ -52,11 +48,14 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
 > Personally tested on Apple's M1 air , i9 pro macbooks; Android Aarch64 mobile phone and tablet with cortex-a76, cortex-a55 cores,
 > and Linux x86 i7 desktop machine. 
 
-## Ongoing plans
+### Support or Contact
+Alekum(Rojaster)
+
+#### Personal contribution
+- [X] aarch64 NEON support
+- [X] clang's integrated assembler fixes for aarch64, arm, x86 on linux and mac
+
+#### Ongoing plans
 - [ ] x86 SSE4
 - [ ] x86 AVX
 - [ ] AArch64 SVE
-
-
-### Support or Contact
-Alekum(Rojaster)
