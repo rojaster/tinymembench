@@ -10,8 +10,8 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
 ```bash
 ....
  ---
- standard memcpy                                      :  30251.8 MB/s (22.9%)
- standard memset                                      :  42933.1 MB/s (8.2%)
+ standard memcpy   :  30251.8 MB/s (22.9%)
+ standard memset   :  42933.1 MB/s (8.2%)
  ---
  ....
 ```
@@ -27,8 +27,8 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
 ```bash
 ....
  ---
- standard memcpy                                      :   8036.5 MB/s (1.0%)
- standard memset                                      :  33126.4 MB/s (7.6%)
+ standard memcpy   :   8036.5 MB/s (1.0%)
+ standard memset   :  33126.4 MB/s (7.6%)
  ---
  ....
 ```
@@ -37,8 +37,8 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
 
 ```bash
  ---
- standard memcpy                                      :  15452.2 MB/s (0.2%)
- standard memset                                      :  32821.6 MB/s (0.4%)
+ standard memcpy   :  15452.2 MB/s (0.2%)
+ standard memset   :  32821.6 MB/s (0.4%)
  ---
 ```
 
