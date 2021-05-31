@@ -5,7 +5,7 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
 > Check log files to get whole output.
 >> Find even more data in the [wiki](https://github.com/ssvb/tinymembench/wiki).
 
-* [Apple M1](m1.log)
+* [Apple M1](m1.apple.log)
 
 ```bash
 ....
@@ -22,7 +22,7 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
 
 ```
 
-* [Apple i9](i9.log)
+* [Apple i9](i9.apple.log)
 
 ```bash
 ....
