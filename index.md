@@ -22,7 +22,16 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
 
 ```
 
-* [Apple i9 - Macbook Pro](i9.apple.log)
+* [Linux i7-8550U Thinkpad](i7-8550U.linux.log)
+
+```bash
+ ---
+ standard memcpy   :   7093.3 MB/s (0.6%)
+ standard memset   :  10988.2 MB/s (0.5%)
+ ---
+```
+
+* [Apple i9-9980HK - Macbook Pro](i9.apple.log)
 
 ```bash
 ....
@@ -33,7 +42,7 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
  ....
 ```
 
-* [Linux i7- Desktop](i7.linux.log)
+* [Linux i7-8700 - Desktop](i7-8700.linux.log)
 
 ```bash
  ---
@@ -42,7 +51,8 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
  ---
 ```
 
-> The experiments aim to represent memory accesses speed.
+> The experiments aim to represent memory access speed.
+> I specified CPUs just for indexing sake. It would be more accurate to represent memory characteristics here for each particular case.
 
 ## Supported Archs
 - [X] macOS: x86, M1
