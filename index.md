@@ -55,7 +55,7 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
 ```
 
 > The experiments aim to represent memory access speed.
-> I specified CPUs just for indexing sake. It would be more accurate to represent memory characteristics here for each particular case.
+> I specified CPUs just for indexing sake. It would be more accurate to represent memory characteristics here for each particular case. Also, more experiments should have been conducted to get more stable data.
 
 ## Supported Archs
 - [X] macOS: x86, M1
