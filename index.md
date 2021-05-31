@@ -5,7 +5,7 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
 > Check log files to get whole output.
 >> Find even more data in the [wiki](https://github.com/ssvb/tinymembench/wiki).
 
-* [Apple M1](m1.apple.log)
+* [Apple M1 - Macbook Air](m1.apple.log)
 
 ```bash
 ....
@@ -16,13 +16,13 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
  ....
 ```
 
-* [Apple i7]()
+* [Apple i7 - Macbook Pro]()
 
 ```bash
 
 ```
 
-* [Apple i9](i9.apple.log)
+* [Apple i9 - Macbook Pro](i9.apple.log)
 
 ```bash
 ....
@@ -33,11 +33,16 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
  ....
 ```
 
-* [Linux i7]()
+* [Linux i7- Desktop](i7.linux.log)
 
 ```bash
-
+ ---
+ standard memcpy                                      :  15452.2 MB/s (0.2%)
+ standard memset                                      :  32821.6 MB/s (0.4%)
+ ---
 ```
+
+> The experiments aim to represent memory accesses speed.
 
 ## Supported Archs
 - [X] macOS: x86, M1

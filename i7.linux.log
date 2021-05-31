@@ -1,0 +1,106 @@
+tinymembench v0.4.10 (simple benchmark for memory throughput and latency)
+
+==========================================================================
+== Memory bandwidth tests                                               ==
+==                                                                      ==
+== Note 1: 1MB = 1000000 bytes                                          ==
+== Note 2: Results for 'copy' tests show how many bytes can be          ==
+==         copied per second (adding together read and writen           ==
+==         bytes would have provided twice higher numbers)              ==
+== Note 3: 2-pass copy means that we are using a small temporary buffer ==
+==         to first fetch data into it, and only then write it to the   ==
+==         destination (source -> L1 cache, L1 cache -> destination)    ==
+== Note 4: If sample standard deviation exceeds 0.1%, it is shown in    ==
+==         brackets                                                     ==
+==========================================================================
+
+ C copy backwards                                     :  10009.3 MB/s (0.5%)
+ C copy backwards (32 byte blocks)                    :  10004.9 MB/s
+ C copy backwards (64 byte blocks)                    :  10029.5 MB/s (0.6%)
+ C copy                                               :  10477.7 MB/s (0.5%)
+ C copy prefetched (32 bytes step)                    :  10601.3 MB/s (0.5%)
+ C copy prefetched (64 bytes step)                    :  10639.3 MB/s (0.6%)
+ C 2-pass copy                                        :   8058.0 MB/s (0.4%)
+ C 2-pass copy prefetched (32 bytes step)             :   7963.5 MB/s (1.6%)
+ C 2-pass copy prefetched (64 bytes step)             :   7984.7 MB/s
+ C fill                                               :  17089.8 MB/s (2.5%)
+ C fill (shuffle within 16 byte blocks)               :  17063.8 MB/s (0.8%)
+ C fill (shuffle within 32 byte blocks)               :  17054.7 MB/s (0.6%)
+ C fill (shuffle within 64 byte blocks)               :  17068.6 MB/s (0.4%)
+ ---
+ standard memcpy                                      :  15452.2 MB/s (0.2%)
+ standard memset                                      :  32821.6 MB/s (0.4%)
+ ---
+ MOVSB copy                                           :  11344.8 MB/s (0.2%)
+ MOVSD copy                                           :  11334.1 MB/s
+ SSE2 copy                                            :  11069.1 MB/s (0.3%)
+ SSE2 nontemporal copy                                :  15899.3 MB/s (0.2%)
+ SSE2 copy prefetched (32 bytes step)                 :  10952.6 MB/s (0.3%)
+ SSE2 copy prefetched (64 bytes step)                 :  10955.1 MB/s
+ SSE2 nontemporal copy prefetched (32 bytes step)     :  15251.5 MB/s
+ SSE2 nontemporal copy prefetched (64 bytes step)     :  15199.1 MB/s (0.3%)
+ SSE2 2-pass copy                                     :   9156.6 MB/s (0.1%)
+ SSE2 2-pass copy prefetched (32 bytes step)          :   8867.1 MB/s (0.5%)
+ SSE2 2-pass copy prefetched (64 bytes step)          :   8900.2 MB/s
+ SSE2 2-pass nontemporal copy                         :   6598.6 MB/s
+ SSE2 fill                                            :  17525.2 MB/s (0.3%)
+ SSE2 nontemporal fill                                :  39070.3 MB/s (0.9%)
+
+==========================================================================
+== Memory latency test                                                  ==
+==                                                                      ==
+== Average time is measured for random memory accesses in the buffers   ==
+== of different sizes. The larger is the buffer, the more significant   ==
+== are relative contributions of TLB, L1/L2 cache misses and SDRAM      ==
+== accesses. For extremely large buffer sizes we are expecting to see   ==
+== page table walk with several requests to SDRAM for almost every      ==
+== memory access (though 64MiB is not nearly large enough to experience ==
+== this effect to its fullest).                                         ==
+==                                                                      ==
+== Note 1: All the numbers are representing extra time, which needs to  ==
+==         be added to L1 cache latency. The cycle timings for L1 cache ==
+==         latency can be usually found in the processor documentation. ==
+== Note 2: Dual random read means that we are simultaneously performing ==
+==         two independent memory accesses at a time. In the case if    ==
+==         the memory subsystem can't handle multiple outstanding       ==
+==         requests, dual random read has the same timings as two       ==
+==         single reads performed one after another.                    ==
+==========================================================================
+
+block size : single random read / dual random read, [MADV_NOHUGEPAGE]
+      1024 :    0.0 ns          /     0.0 ns 
+      2048 :    0.0 ns          /     0.0 ns 
+      4096 :    0.0 ns          /     0.0 ns 
+      8192 :    0.0 ns          /     0.0 ns 
+     16384 :    0.0 ns          /     0.0 ns 
+     32768 :    0.0 ns          /     0.0 ns 
+     65536 :    0.8 ns          /     1.1 ns 
+    131072 :    1.2 ns          /     1.5 ns 
+    262144 :    2.3 ns          /     3.0 ns 
+    524288 :    5.7 ns          /     7.5 ns 
+   1048576 :    7.9 ns          /     9.4 ns 
+   2097152 :    9.0 ns          /    10.0 ns 
+   4194304 :   10.0 ns          /    10.5 ns 
+   8388608 :   16.2 ns          /    17.8 ns 
+  16777216 :   40.9 ns          /    52.8 ns 
+  33554432 :   59.0 ns          /    70.4 ns 
+  67108864 :   69.0 ns          /    77.1 ns 
+
+block size : single random read / dual random read, [MADV_HUGEPAGE]
+      1024 :    0.0 ns          /     0.0 ns 
+      2048 :    0.0 ns          /     0.0 ns 
+      4096 :    0.0 ns          /     0.0 ns 
+      8192 :    0.0 ns          /     0.0 ns 
+     16384 :    0.0 ns          /     0.0 ns 
+     32768 :    0.0 ns          /     0.0 ns 
+     65536 :    0.8 ns          /     1.1 ns 
+    131072 :    1.2 ns          /     1.5 ns 
+    262144 :    1.5 ns          /     1.6 ns 
+    524288 :    5.0 ns          /     6.8 ns 
+   1048576 :    6.8 ns          /     8.4 ns 
+   2097152 :    7.8 ns          /     8.9 ns 
+   4194304 :    8.7 ns          /     9.2 ns 
+   8388608 :   13.4 ns          /    14.8 ns 
+  16777216 :   35.6 ns          /    47.1 ns 
+  33554432 :   52.4 ns          /    64.0 ns 
+  67108864 :   60.1 ns          /    68.7 ns 
