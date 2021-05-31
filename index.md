@@ -16,10 +16,13 @@ This is a simple memory benchmark program, which tries to measure the peak bandw
  ....
 ```
 
-* [Apple i7 - Macbook Pro]()
+* [Apple i7-8850H - Macbook Pro](i7-8850H.apple.log)
 
 ```bash
-
+ ---
+ standard memcpy   :   7546.7 MB/s (0.6%)
+ standard memset   :  28423.6 MB/s (3.6%)
+ ---
 ```
 
 * [Linux i7-8550U Thinkpad](i7-8550U.linux.log)
